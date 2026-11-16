@@ -1,48 +1,102 @@
-public class Rectangle implements IShape{
-    private double a;
-    private double b;
+class Rectangle implements IShape {
 
-    public double getA() {
-        return a;
-    }
+    private double centerX;
+    private double centerY;
+    private double width;
+    private double height;
+    private double angle;
 
-    public void setA(double a) {
-        this.a = a;
-    }
+    public Rectangle(double centerX, double centerY,
+                     double width, double height) {
 
-    public double getB(){
-        return b;
-    }
-
-    public void setB(){
-        this.b = b;
+        this.centerX = centerX;
+        this.centerY = centerY;
+        this.width = Math.max(0, width);
+        this.height = Math.max(0, height);
+        this.angle = 0;
     }
 
-    public Rectangle(){
-
+    // Getter và Setter
+    public double getWidth() {
+        return width;
     }
 
-    public Rectangle(double a,double b){
-        this.a = a;
-        this.b = b;
+    public double getHeight() {
+        return height;
     }
-    public double area(){
-        double s = a*b;
-        return s;
+
+    public double getAngle() {
+        return angle;
     }
-    public double perimeter(){
-        double c = 2*(a+b);
-        return c;
+
+    public void setWidth(double width) {
+        if (width >= 0) this.width = width;
     }
-    public double distance(){
-        System.out.print("a");
-        double a=2;
-        return a;
+
+    public void setHeight(double height) {
+        if (height >= 0) this.height = height;
     }
-    public void move(){
-        System.out.print("a");
+
+    public void setCenterX(double centerX) {
+        this.centerX = centerX;
     }
-    public void zoom(){
-        System.out.print("a");
+
+    public void setCenterY(double centerY) {
+        this.centerY = centerY;
+    }
+
+    @Override
+    public double area() {
+        return width * height;
+    }
+
+    @Override
+    public double perimeter() {
+        return 2 * (width + height);
+    }
+
+    @Override
+    public double distance(IShape other) {
+        double dx = centerX - other.getCenterX();
+        double dy = centerY - other.getCenterY();
+
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    @Override
+    public void move(double dx, double dy) {
+        centerX += dx;
+        centerY += dy;
+    }
+
+    @Override
+    public void rotate(double angle) {
+        this.angle += angle;
+    }
+
+    @Override
+    public void zoom(double ratio) {
+        if (ratio <= 0) return;
+
+        width *= ratio;
+        height *= ratio;
+    }
+
+    @Override
+    public double getCenterX() {
+        return centerX;
+    }
+
+    @Override
+    public double getCenterY() {
+        return centerY;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Rectangle(center=(%.2f, %.2f), width=%.2f, height=%.2f, angle=%.2f)",
+                centerX, centerY, width, height, angle
+        );
     }
 }

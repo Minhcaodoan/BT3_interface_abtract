@@ -1,44 +1,85 @@
-public class Circle implements IShape{
-    private double a;
-    private double b;
+class Circle implements IShape {
 
-    public double getA() {
-        return a;
-    }
+    private double centerX;
+    private double centerY;
+    private double radius;
 
-    public void setA(double a) {
-        this.a = a;
-    }
-
-    public double getB(){
-        return b;
+    public Circle(double centerX, double centerY, double radius) {
+        this.centerX = centerX;
+        this.centerY = centerY;
+        this.radius = Math.max(0, radius);
     }
 
-    public void setB(){
-        this.b = b;
+    // Getter và Setter
+    public double getRadius() {
+        return radius;
     }
 
-    public Circle(){
-
+    public void setRadius(double radius) {
+        if (radius >= 0) {
+            this.radius = radius;
+        }
     }
 
-    public Circle(double a,double b){
-        this.a = a;
-        this.b = b;
+    public void setCenterX(double centerX) {
+        this.centerX = centerX;
     }
-    public double area(){
-        return 0;
+
+    public void setCenterY(double centerY) {
+        this.centerY = centerY;
     }
-    public double perimeter(){
-        return 0;
+
+    @Override
+    public double area() {
+        return Math.PI * radius * radius;
     }
-    public double distance(){
-        return 0;
+
+    @Override
+    public double perimeter() {
+        return 2 * Math.PI * radius;
     }
-    public void move(){
-        System.out.print("a");
+
+    @Override
+    public double distance(IShape other) {
+        double dx = centerX - other.getCenterX();
+        double dy = centerY - other.getCenterY();
+
+        return Math.sqrt(dx * dx + dy * dy);
     }
-    public void zoom(){
-        System.out.print("a");
+
+    @Override
+    public void move(double dx, double dy) {
+        centerX += dx;
+        centerY += dy;
+    }
+
+    @Override
+    public void rotate(double angle) {
+        // Xoay hình tròn quanh tâm không làm thay đổi hình.
+    }
+
+    @Override
+    public void zoom(double ratio) {
+        if (ratio > 0) {
+            radius *= ratio;
+        }
+    }
+
+    @Override
+    public double getCenterX() {
+        return centerX;
+    }
+
+    @Override
+    public double getCenterY() {
+        return centerY;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Circle(center=(%.2f, %.2f), radius=%.2f)",
+                centerX, centerY, radius
+        );
     }
 }
